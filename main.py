@@ -3,6 +3,8 @@ import quart_cors
 from quart import request
 import arxiv
 import json
+import tarfile
+import re
 
 app = quart_cors.cors(quart.Quart(__name__), allow_origin="https://chat.openai.com")
 
@@ -66,6 +68,44 @@ async def paper():
         'primary_category': paper.primary_category,
         'categories': paper.categories,
         'pdf_url': paper.pdf_url
+    })
+
+@app.route('/full_paper', methods=['GET'])
+async def full_paper():
+    paper_id = request.args.get('paper_id', default = '', type = str)
+    search = arxiv.Search(id_list=[paper_id])
+    paper = next(search.results())
+    
+    paper_source = paper.download_source(dirpath="./downloads")
+    tex_files_content = {}
+
+    with tarfile.open(paper_source, mode="r:gz") as tar:
+        for tarinfo in tar:
+            if tarinfo.name.endswith(".tex"):
+                extracted_file = tar.extractfile(tarinfo.name)
+                content = extracted_file.read().decode("utf-8")
+                # Remove document class and preamble
+                content = re.sub(r'\\documentclass.*\\begin\{document\}', '', content, flags=re.DOTALL)
+                # Remove LaTeX commands
+                content = re.sub(r'\\[a-z]*\{[^}]*\}', '', content) 
+                # Remove figures and tables (including their content)
+                content = re.sub(r'\\begin\{(figure|table)\}.*?\\end\{\1\}', '', content, flags=re.DOTALL)
+                # Remove comments
+                content = re.sub(r'%.*', '', content)
+                # Remove \includegraphics commands
+                content = re.sub(r'\\includegraphics\[[^\]]*\]\{[^}]*\}', '', content)
+                # Remove \centering and \linewidth commands
+                content = re.sub(r'\\centering', '', content)
+                content = re.sub(r'\{\\linewidth\}', '', content)
+                # Remove extra newlines
+                content = re.sub(r'\n\s*\n', '\n', content)
+                tex_files_content[tarinfo.name] = content
+    
+    return quart.jsonify({
+        'title': paper.title,
+        'authors': [str(author) for author in paper.authors],
+        'summary': paper.summary,
+        'tex_files_content': tex_files_content
     })
 
 @app.get("/logo.png")

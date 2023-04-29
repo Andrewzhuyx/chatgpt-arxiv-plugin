@@ -1,4 +1,4 @@
-# ChatGPT Arxiv Plugin Quickstart
+# ChatGPT ArXiv Plugin Quickstart
 
 Get an Arxiv paper search/retrieval ChatGPT plugin up and running in under 5 minutes using Python. If you do not already have plugin developer access, please [join the waitlist](https://openai.com/waitlist/plugins).
 
@@ -28,4 +28,6 @@ The plugin should now be installed and enabled! You can start with a question li
 
 ## Getting help
 
-If you run into issues or have questions building a plugin, please join our [Developer community forum](https://community.openai.com/c/chat-plugins/20).
+If you run into issues or have questions building a plugin, please join OpenAI's [Developer community forum](https://community.openai.com/c/chat-plugins/20).
+
+If you run into issues with the plugin, please email andrewyx@seas.upenn.edu

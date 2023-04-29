@@ -3,7 +3,7 @@
     "name_for_human": "ArXiv Paper Search/Retrieval",
     "name_for_model": "arxivPaperSearch",
     "description_for_human": "Search for and retrieve academic papers from ArXiv.",
-    "description_for_model": "Search for and retrieve academic papers from ArXiv. Provide summaries, links to full text, and relevant metadata for each paper found.",
+    "description_for_model": "Search for and retrieve academic papers from ArXiv. Provide summaries, links to full text, full text in latex, and relevant metadata for each paper found.",
     "auth": {
         "type": "none"
     },

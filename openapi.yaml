@@ -30,10 +30,25 @@ paths:
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad request
   /paper:
     get:
       operationId: getPaper
-      summary: Retrieves a specific paper based on its arXiv ID.
+      summary: Retrieves a specific paper based on its arXiv ID. The result includes the paper's title, abstract, authors, and other metadata.
+      parameters:
+        - in: query
+          name: paper_id
+          schema:
+            type: string
+          description: The arXiv ID of the paper to retrieve. For example, ?id=1605.08386v1 will return the paper with the arXiv ID '1605.08386v1'.
+      responses:
+        "200":
+          description: OK
+  /full_paper:
+    get:
+      operationId: getFullPaper
+      summary: Retrieves a specific paper based on its arXiv ID. The retrieved full paper will be in tex format.
       parameters:
         - in: query
           name: paper_id
