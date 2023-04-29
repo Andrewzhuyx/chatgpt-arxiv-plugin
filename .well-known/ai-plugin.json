@@ -1,0 +1,20 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "ArXiv Paper Search/Retrieval",
+    "name_for_model": "arxivPaperSearch",
+    "description_for_human": "Search for and retrieve academic papers from ArXiv.",
+    "description_for_model": "Search for and retrieve academic papers from ArXiv. Provide summaries, links to full text, and relevant metadata for each paper found.",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "http://localhost:5001/openapi.yaml",
+        "is_user_authenticated": false
+    },
+    "logo_url": "http://localhost:5001/logo.png",
+    "contact_email": "andrewyx@seas.upenn.edu",
+    "legal_info_url": "https://arxivplugin.com/legal"
+}
+
+  

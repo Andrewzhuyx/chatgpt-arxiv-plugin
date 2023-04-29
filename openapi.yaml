@@ -1,0 +1,45 @@
+openapi: 3.0.1
+info:
+  title: ArXiv Paper Retrieval
+  description: Retrieve academic papers from the arXiv database.
+  version: "v1"
+servers:
+  - url: http://localhost:5001
+paths:
+  /search:
+    get:
+      operationId: searchPapers
+      summary: Searches for papers based on a query string.
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+          description: Used to search for papers based on their title, author, abstract, etc. For example, ?query=quantum will return papers that have 'quantum' in their title, abstract, or are authored by someone named 'quantum'.
+        - in: query
+          name: max_results
+          schema:
+            type: integer
+          description: The maximum number of search results to return.
+        - in: query
+          name: sort_by
+          schema:
+            type: string
+            enum: [Relevance, LastUpdatedDate, SubmittedDate]
+          description: The criterion by which to sort the search results.
+      responses:
+        "200":
+          description: OK
+  /paper:
+    get:
+      operationId: getPaper
+      summary: Retrieves a specific paper based on its arXiv ID.
+      parameters:
+        - in: query
+          name: paper_id
+          schema:
+            type: string
+          description: The arXiv ID of the paper to retrieve. For example, ?id=1605.08386v1 will return the paper with the arXiv ID '1605.08386v1'.
+      responses:
+        "200":
+          description: OK
