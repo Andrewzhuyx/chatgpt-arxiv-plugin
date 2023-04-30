@@ -1,6 +1,3 @@
 quart
 quart-cors
 arxiv
-json
-tarfile
-re
